@@ -1,46 +1,65 @@
 /**
- * ================================================================
- * MAIN CLASS – UseCase1PalindromeApp
- * ================================================================
+ * =========================================================
+ * MAIN CLASS – UseCase4PalindromeCheckerApp
+ * =========================================================
  *
- * Use Case 1: Application Entry & Welcome Message
+ * Use Case 4: Character Array Based Validation
  *
  * Description:
- * This class represents the entry point of the
- * Palindrome Checker Management System.
+ * This class validates a palindrome by converting
+ * the string into a character array and comparing
+ * characters using the two-pointer technique.
  *
  * At this stage, the application:
- * - Starts execution from the main() method
- * - Displays a welcome message
- * - Shows application version
+ * - Converts string to char array
+ * - Uses start and end pointers
+ * - Compares characters efficiently
+ * - Displays the result
  *
- * No palindrome logic is implemented yet.
- *
- * The goal is to establish a clear startup flow.
+ * This reduces extra memory usage.
  *
  * @author Developer
- * @version 1.0
+ * @version 4.0
  */
 
 public class PalindromeApp {
 
     /**
-     * Application entry point.
-     *
-     * This is the first method executed by the JVM
-     * when the program starts.
+     * Application entry point for UC4.
      *
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
-        // Display welcome message
-        System.out.println("Welcome to the Palindrome Checker Management System");
+        // Declare and initialize the input string.
+        String input = "radar";
 
-        // Display application version
-        System.out.println("Version : 1.0");
+        // Convert the string into a character array.
+        char[] chars = input.toCharArray();
 
-        // Display initialization message
-        System.out.println("System initialized successfully.");
+        // Initialize pointer at the beginning.
+        int start = 0;
+
+        // Initialize pointer at the end.
+        int end = chars.length - 1;
+
+        // Assume palindrome initially.
+        boolean isPalindrome = true;
+
+        // Continue comparison until pointers cross.
+        while (start < end) {
+
+            if (chars[start] != chars[end]) {
+                isPalindrome = false;
+                break;
+            }
+
+            start++;
+            end--;
+        }
+
+        // Display result
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + isPalindrome);
     }
 }
