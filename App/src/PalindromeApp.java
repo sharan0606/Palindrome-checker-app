@@ -1,27 +1,50 @@
-public class PalindromeCheckerApp {
+/**
+ * ==============================================================
+ * UC11 : Object-Oriented Palindrome Service
+ * ==============================================================
+ *
+ * Goal:
+ * Encapsulate palindrome checking logic inside a class
+ * following OOPS principles.
+ *
+ * Concepts Used:
+ * - Encapsulation
+ * - Single Responsibility Principle
+ */
 
-    // Recursive method to check palindrome
-    public static boolean isPalindrome(String str, int start, int end) {
+class PalindromeChecker {
 
-        // Base Condition
-        if (start >= end) {
-            return true;
-        }
+    // Encapsulated method to check palindrome
+    public boolean checkPalindrome(String input) {
 
-        // If characters do not match
-        if (str.charAt(start) != str.charAt(end)) {
+        if (input == null)
             return false;
+
+        int left = 0;
+        int right = input.length() - 1;
+
+        while (left < right) {
+            if (input.charAt(left) != input.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
         }
 
-        // Recursive Call
-        return isPalindrome(str, start + 1, end - 1);
+        return true;
     }
+}
+
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String input = "madam";
+        String input = "racecar";
 
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        // Create object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
+
+        boolean result = checker.checkPalindrome(input);
 
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + result);
