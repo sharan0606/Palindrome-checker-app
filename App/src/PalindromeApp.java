@@ -1,57 +1,53 @@
-import java.util.Stack;
-import java.util.Queue;
+import java.util.Deque;
 import java.util.LinkedList;
 
 /**
  * ==============================================================
- * MAIN CLASS - UseCase6PalindromeCheckerApp
+ * MAIN CLASS - UseCase7PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 6: Queue + Stack Based Palindrome Checker
+ * Use Case 7: Deque-Based Optimized Palindrome Checker
  *
  * Description:
- * This class demonstrates FIFO and LIFO behavior
- * using Queue and Stack to validate a palindrome.
+ * This class validates a palindrome using a Deque
+ * (Double Ended Queue) which allows insertion and
+ * deletion from both front and rear.
  *
  * At this stage, the application:
- * - Enqueues characters into a queue
- * - Pushes characters into a stack
- * - Compares dequeue with pop
+ * - Inserts characters into deque
+ * - Removes first and last elements
+ * - Compares them until deque is empty
  * - Displays the result
  *
  * @author rohidh
- * @version 6.0
+ * @version 7.0
  */
 
 public class PalindromeApp {
 
     /**
-     * Application entry point for UC6.
+     * Application entry point for UC7.
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
         // Declare and initialize input string
-        String input = "madam";
+        String input = "racecar";
 
-        // Create Stack (LIFO)
-        Stack<Character> stack = new Stack<>();
+        // Create Deque
+        Deque<Character> deque = new LinkedList<>();
 
-        // Create Queue (FIFO)
-        Queue<Character> queue = new LinkedList<>();
-
-        // Insert characters into both structures
+        // Insert characters into deque
         for (char c : input.toCharArray()) {
-            stack.push(c);      // LIFO
-            queue.add(c);       // FIFO
+            deque.addLast(c);
         }
 
         // Assume palindrome initially
         boolean isPalindrome = true;
 
-        // Compare dequeue (FIFO) vs pop (LIFO)
-        while (!stack.isEmpty()) {
-            if (!queue.remove().equals(stack.pop())) {
+        // Compare front and rear elements
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
                 isPalindrome = false;
                 break;
             }
