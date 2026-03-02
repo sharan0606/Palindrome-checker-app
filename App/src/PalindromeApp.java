@@ -1,53 +1,97 @@
 /**
  * ==============================================================
- * UC11 : Object-Oriented Palindrome Service
+ * UC12 : Strategy Pattern for Palindrome Algorithms
  * ==============================================================
  *
  * Goal:
- * Encapsulate palindrome checking logic inside a class
- * following OOPS principles.
+ * Choose palindrome algorithm dynamically at runtime.
  *
  * Concepts Used:
- * - Encapsulation
- * - Single Responsibility Principle
+ * - Interface
+ * - Polymorphism
+ * - Strategy Pattern
  */
 
-class PalindromeChecker {
+import java.util.*;
 
-    // Encapsulated method to check palindrome
+// Strategy Interface
+interface PalindromeStrategy {
+    boolean checkPalindrome(String input);
+}
+
+// Stack Based Strategy
+class StackStrategy implements PalindromeStrategy {
+
+    @Override
     public boolean checkPalindrome(String input) {
 
-        if (input == null)
-            return false;
+        Stack<Character> stack = new Stack<>();
 
-        int left = 0;
-        int right = input.length() - 1;
-
-        while (left < right) {
-            if (input.charAt(left) != input.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
+        for (char c : input.toCharArray()) {
+            stack.push(c);
         }
 
+        for (char c : input.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
+        }
         return true;
     }
 }
 
+// Deque Based Strategy
+class DequeStrategy implements PalindromeStrategy {
 
+    @Override
+    public boolean checkPalindrome(String input) {
+
+        Deque<Character> deque = new LinkedList<>();
+
+        for (char c : input.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+// Context Class
+class PalindromeContext {
+
+    private PalindromeStrategy strategy;
+
+    public void setStrategy(PalindromeStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public boolean executeStrategy(String input) {
+        return strategy.checkPalindrome(input);
+    }
+}
+
+// Main Application
 public class PalindromeApp {
 
     public static void main(String[] args) {
 
-        String input = "racecar";
+        String input = "level";
 
-        // Create object of PalindromeChecker
-        PalindromeChecker checker = new PalindromeChecker();
+        PalindromeContext context = new PalindromeContext();
 
-        boolean result = checker.checkPalindrome(input);
+        // Choose Stack Strategy
+        context.setStrategy(new StackStrategy());
+        System.out.println("Using Stack Strategy: " +
+                context.executeStrategy(input));
 
-        System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + result);
+        // Switch to Deque Strategy
+        context.setStrategy(new DequeStrategy());
+        System.out.println("Using Deque Strategy: " +
+                context.executeStrategy(input));
     }
 }
