@@ -35,8 +35,7 @@ class PalindromeChecker {
     }
 }
 
-
-public class PalindromeApp {
+public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
