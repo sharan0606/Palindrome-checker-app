@@ -1,51 +1,57 @@
 import java.util.Stack;
+import java.util.Queue;
+import java.util.LinkedList;
 
 /**
  * ==============================================================
- * MAIN CLASS - UseCase5PalindromeCheckerApp
+ * MAIN CLASS - UseCase6PalindromeCheckerApp
  * ==============================================================
  *
- * Use Case 5: Stack Based Palindrome Checker
+ * Use Case 6: Queue + Stack Based Palindrome Checker
  *
  * Description:
- * This class validates a palindrome using a Stack
- * data structure which follows the LIFO principle.
+ * This class demonstrates FIFO and LIFO behavior
+ * using Queue and Stack to validate a palindrome.
  *
  * At this stage, the application:
+ * - Enqueues characters into a queue
  * - Pushes characters into a stack
- * - Pops them in reverse order
- * - Compares with original sequence
+ * - Compares dequeue with pop
  * - Displays the result
  *
  * @author rohidh
- * @version 5.0
+ * @version 6.0
  */
 
 public class PalindromeApp {
 
     /**
-     * Application entry point for UC5.
+     * Application entry point for UC6.
      * @param args Command-line arguments
      */
     public static void main(String[] args) {
 
         // Declare and initialize input string
-        String input = "noon";
+        String input = "madam";
 
-        // Create Stack to store characters
+        // Create Stack (LIFO)
         Stack<Character> stack = new Stack<>();
 
-        // Push each character into stack
+        // Create Queue (FIFO)
+        Queue<Character> queue = new LinkedList<>();
+
+        // Insert characters into both structures
         for (char c : input.toCharArray()) {
-            stack.push(c);
+            stack.push(c);      // LIFO
+            queue.add(c);       // FIFO
         }
 
         // Assume palindrome initially
         boolean isPalindrome = true;
 
-        // Compare original string with reversed order (stack pop)
-        for (char c : input.toCharArray()) {
-            if (c != stack.pop()) {
+        // Compare dequeue (FIFO) vs pop (LIFO)
+        while (!stack.isEmpty()) {
+            if (!queue.remove().equals(stack.pop())) {
                 isPalindrome = false;
                 break;
             }
