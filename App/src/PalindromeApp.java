@@ -1,54 +1,48 @@
 /**
  * ==============================================================
- * UC12 : Strategy Pattern for Palindrome Algorithms
+ * UC13 : Performance Comparison of Palindrome Algorithms
  * ==============================================================
  *
  * Goal:
- * Choose palindrome algorithm dynamically at runtime.
+ * Compare execution time of different palindrome approaches.
  *
  * Concepts Used:
- * - Interface
- * - Polymorphism
- * - Strategy Pattern
+ * - System.nanoTime()
+ * - Algorithm comparison
  */
 
 import java.util.*;
 
-// Strategy Interface
-interface PalindromeStrategy {
-    boolean checkPalindrome(String input);
-}
+public class PalindromeApp {
 
-// Stack Based Strategy
-class StackStrategy implements PalindromeStrategy {
+    // ------------------ Recursive Approach ------------------
+    public static boolean recursiveCheck(String str, int start, int end) {
+        if (start >= end) return true;
+        if (str.charAt(start) != str.charAt(end)) return false;
+        return recursiveCheck(str, start + 1, end - 1);
+    }
 
-    @Override
-    public boolean checkPalindrome(String input) {
-
+    // ------------------ Stack Approach ------------------
+    public static boolean stackCheck(String str) {
         Stack<Character> stack = new Stack<>();
 
-        for (char c : input.toCharArray()) {
+        for (char c : str.toCharArray()) {
             stack.push(c);
         }
 
-        for (char c : input.toCharArray()) {
+        for (char c : str.toCharArray()) {
             if (c != stack.pop()) {
                 return false;
             }
         }
         return true;
     }
-}
 
-// Deque Based Strategy
-class DequeStrategy implements PalindromeStrategy {
-
-    @Override
-    public boolean checkPalindrome(String input) {
-
+    // ------------------ Deque Approach ------------------
+    public static boolean dequeCheck(String str) {
         Deque<Character> deque = new LinkedList<>();
 
-        for (char c : input.toCharArray()) {
+        for (char c : str.toCharArray()) {
             deque.addLast(c);
         }
 
@@ -59,39 +53,33 @@ class DequeStrategy implements PalindromeStrategy {
         }
         return true;
     }
-}
 
-// Context Class
-class PalindromeContext {
-
-    private PalindromeStrategy strategy;
-
-    public void setStrategy(PalindromeStrategy strategy) {
-        this.strategy = strategy;
-    }
-
-    public boolean executeStrategy(String input) {
-        return strategy.checkPalindrome(input);
-    }
-}
-
-// Main Application
-public class PalindromeCheckerApp {
-
+    // ------------------ Main Method ------------------
     public static void main(String[] args) {
 
-        String input = "level";
+        String input = "racecar";
 
-        PalindromeContext context = new PalindromeContext();
+        long start1 = System.nanoTime();
+        boolean r1 = recursiveCheck(input, 0, input.length() - 1);
+        long end1 = System.nanoTime();
 
-        // Choose Stack Strategy
-        context.setStrategy(new StackStrategy());
-        System.out.println("Using Stack Strategy: " +
-                context.executeStrategy(input));
+        long start2 = System.nanoTime();
+        boolean r2 = stackCheck(input);
+        long end2 = System.nanoTime();
 
-        // Switch to Deque Strategy
-        context.setStrategy(new DequeStrategy());
-        System.out.println("Using Deque Strategy: " +
-                context.executeStrategy(input));
+        long start3 = System.nanoTime();
+        boolean r3 = dequeCheck(input);
+        long end3 = System.nanoTime();
+
+        System.out.println("Input : " + input);
+        System.out.println("----------------------------------");
+        System.out.println("Recursive Result : " + r1);
+        System.out.println("Recursive Time   : " + (end1 - start1) + " ns");
+        System.out.println("----------------------------------");
+        System.out.println("Stack Result     : " + r2);
+        System.out.println("Stack Time       : " + (end2 - start2) + " ns");
+        System.out.println("----------------------------------");
+        System.out.println("Deque Result     : " + r3);
+        System.out.println("Deque Time       : " + (end3 - start3) + " ns");
     }
 }
