@@ -1,44 +1,51 @@
 /**
  * ==============================================================
- * MAIN CLASS - UseCase9PalindromeCheckerApp
+ * UC11 : Object-Oriented Palindrome Service
  * ==============================================================
  *
- * Use Case 9: Recursive Palindrome Checker
+ * Goal:
+ * Encapsulate palindrome checking logic inside a class
+ * following OOPS principles.
  *
- * Description:
- * This class validates whether a string is a palindrome
- * using recursion. The method compares characters from
- * start and end positions and reduces the problem size
- * through recursive calls.
- *
- * @author rohidh
- * @version 9.0
+ * Concepts Used:
+ * - Encapsulation
+ * - Single Responsibility Principle
  */
 
-public class UseCase9PalindromeCheckerApp {
+class PalindromeChecker {
 
-    // Recursive method to check palindrome
-    public static boolean isPalindrome(String str, int start, int end) {
+    // Encapsulated method to check palindrome
+    public boolean checkPalindrome(String input) {
 
-        // Base condition
-        if (start >= end) {
-            return true;
-        }
-
-        // If mismatch found
-        if (str.charAt(start) != str.charAt(end)) {
+        if (input == null)
             return false;
+
+        int left = 0;
+        int right = input.length() - 1;
+
+        while (left < right) {
+            if (input.charAt(left) != input.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
         }
 
-        // Recursive call
-        return isPalindrome(str, start + 1, end - 1);
+        return true;
     }
+}
+
+
+public class PalindromeApp {
 
     public static void main(String[] args) {
 
-        String input = "level";
+        String input = "racecar";
 
-        boolean result = isPalindrome(input, 0, input.length() - 1);
+        // Create object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
+
+        boolean result = checker.checkPalindrome(input);
 
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + result);
