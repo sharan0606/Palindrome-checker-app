@@ -59,22 +59,18 @@ public class PalindromeApp {
 
         String input = "racecar";
 
-        // Recursive Timing
         long start1 = System.nanoTime();
         boolean r1 = recursiveCheck(input, 0, input.length() - 1);
         long end1 = System.nanoTime();
 
-        // Stack Timing
         long start2 = System.nanoTime();
         boolean r2 = stackCheck(input);
         long end2 = System.nanoTime();
 
-        // Deque Timing
         long start3 = System.nanoTime();
         boolean r3 = dequeCheck(input);
         long end3 = System.nanoTime();
 
-        // Display Results
         System.out.println("Input : " + input);
         System.out.println("----------------------------------");
         System.out.println("Recursive Result : " + r1);
